@@ -1,0 +1,49 @@
+<!--
+  Generated template for the SetlocationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Set Location</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+
+        <ion-item>
+            <ion-label>Latitude : {{ location.lat }}</ion-label>
+            <!-- <ion-input type="text" [(ngModel)]="location.lat"></ion-input> -->
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Longitude : {{ location.lng }}</ion-label>
+            <!-- <ion-input type="text" [(ngModel)]="location.lng"></ion-input> -->
+        </ion-item>
+        <ion-item>
+            <ion-label>Miles</ion-label>
+            <ion-input type="number" [(ngModel)]="location.miles"></ion-input>
+        </ion-item>
+
+        <ion-row style="margin-top:10px;margin-bottom:10px;">
+            <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                <button class="signup" ion-button (click)="presentActionSheet()">+ Add Image</button>
+            </ion-col>
+            <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                <button class="signup" ion-button (click)="SaveLocation()">Set Location</button>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+
+    <div class="row">
+        <img src="{{location.attrUrl}}" *ngIf="location.attrUrl">
+    </div>
+    <!-- <div class="row" style="text-align:center"> -->
+    <!-- <button class="signup" ion-button (click)="SaveLocation()">SET</button> -->
+    <!-- </div> -->
+</ion-content>
