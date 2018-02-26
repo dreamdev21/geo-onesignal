@@ -16,6 +16,7 @@ import { ClientlocationPage } from "../clientlocation/clientlocation";
 import { SetlocationPage } from "../setlocation/setlocation";
 import { AutocompletelocationPage } from "../autocompletelocation/autocompletelocation";
 import { ModalmapPage} from '../modalmap/modalmap';
+import { Location } from "../../models/location";
 /**
  * Generated class for the LoginPage page.
  *
@@ -31,6 +32,8 @@ import { ModalmapPage} from '../modalmap/modalmap';
 export class LoginPage {
   public user = {} as User;
   public checkstate = 0;
+  public locations : any;
+  public location = {} as Location;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -79,9 +82,9 @@ export class LoginPage {
           that.storage.set("CurrentUser", that.user);
           that.navCtrl.push(ClientlocationPage);
         } else if (user.role == 1) {
-                 that.storage.set("currentUser", that.user);
-                 that.navCtrl.push(AutocompletelocationPage);
-               }
+          that.storage.set("currentUser", that.user);
+          that.navCtrl.push(AutocompletelocationPage);
+        }
       }
     });
   }

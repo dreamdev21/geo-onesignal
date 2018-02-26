@@ -58,11 +58,11 @@ export class AutocompletelocationPage {
   ) {
     this.platform.ready().then(() => this.loadMaps());
     this.regionals = [
-      // {
-      //   title: "Marker 1",
-      //   latitude: 52.50094,
-      //   longitude: 13.29922
-      // },
+      {
+        title: "Marker 1",
+        latitude: 52.50094,
+        longitude: 13.29922
+      }
       // {
       //   title: "Marker 3",
       //   latitude: 52.5001,
@@ -416,10 +416,10 @@ export class AutocompletelocationPage {
     //   }
     // });
     if (this.location.lat) {
-      this.showToast("location selected");
+      this.showToast("Location Selected");
       this.setLocation();
     } else {
-      this.showToast("Please select Location");
+      this.showToast("Please Search Location on Searchbar");
     }
   }
   setLocation() {

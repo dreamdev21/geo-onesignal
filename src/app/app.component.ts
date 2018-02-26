@@ -5,16 +5,27 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { OneSignal } from "@ionic-native/onesignal";
 import { LoginPage } from '../pages/login/login';
 import { Geofence } from '@ionic-native/geofence';
+import { PushalarmPage } from '../pages/pushalarm/pushalarm';
+import { ClientlocationPage } from "../pages/clientlocation/clientlocation";
+import { AutocompletelocationPage } from "../pages/autocompletelocation/autocompletelocation";
+import { Storage } from "@ionic/storage";
+import { IonicPage, Nav, NavParams } from "ionic-angular";
+import { Inject, ViewChild } from "@angular/core";
+import {
+  AlertController
+} from "ionic-angular";
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
   rootPage: any = LoginPage;
-
+  @ViewChild(Nav) nav: Nav;
   constructor(
     private oneSignal: OneSignal,
     private platform: Platform,
-    private geofence:Geofence,
+    private geofence: Geofence,
+    private alertCtrl: AlertController,
+    private storage: Storage,
     statusBar: StatusBar,
     splashScreen: SplashScreen
   ) {
@@ -24,8 +35,19 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-
-      this.oneSignal.startInit("9965736a-8118-414e-9084-b79a07d58f8b", "169673409052");
+      // storage.get("currentUser").then(val => {
+      //   if (val) {
+      //     if (val.role == 0) {
+      //       this.nav.push(ClientlocationPage, { user: val });
+      //     } else {
+      //       this.nav.push(AutocompletelocationPage, { user: val });
+      //     }
+      //   }
+      // });
+      this.oneSignal.startInit(
+        "9965736a-8118-414e-9084-b79a07d58f8b",
+        "169673409052"
+      );
 
       this.oneSignal.inFocusDisplaying(
         this.oneSignal.OSInFocusDisplayOption.InAppAlert
@@ -33,21 +55,34 @@ export class MyApp {
 
       this.oneSignal.handleNotificationReceived().subscribe(() => {
         // do something when notification is received
+        console.log("onesignal notification received");
+        // this.showAlert("onesignal notification received");
       });
 
       this.oneSignal.handleNotificationOpened().subscribe(() => {
         // do something when a notification is opened
+        // this.showAlert("onesignal notification opened");
+        this.nav.push(PushalarmPage);
       });
 
       this.oneSignal.endInit();
 
       console.log("initializing app");
 
-      this.geofence.onTransitionReceived(
-      );
-
+      this.geofence.onTransitionReceived();
     });
   }
-
+  showAlert(text) {
+    let alert = this.alertCtrl.create({
+      title: "Warning!",
+      subTitle: text,
+      buttons: [
+        {
+          text: "OK"
+        }
+      ]
+    });
+    alert.present();
+  }
 }
 

@@ -33,6 +33,7 @@ import { ClientlocationPage } from '../pages/clientlocation/clientlocation';
 import { SetlocationPage } from '../pages/setlocation/setlocation';
 import { AutocompletelocationPage } from '../pages/autocompletelocation/autocompletelocation';
 import { ModalmapPage } from '../pages/modalmap/modalmap';
+import { PushalarmPage } from '../pages/pushalarm/pushalarm';
 // import { SetlocationPageModule } from '../pages/setlocation/setlocation.module';
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ModalmapPage } from '../pages/modalmap/modalmap';
     ClientlocationPage,
     SetlocationPage,
     AutocompletelocationPage,
-    ModalmapPage
+    ModalmapPage,
+    PushalarmPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { ModalmapPage } from '../pages/modalmap/modalmap';
     ClientlocationPage,
     SetlocationPage,
     AutocompletelocationPage,
-    ModalmapPage
+    ModalmapPage,
+    PushalarmPage
   ],
   providers: [
     StatusBar,
