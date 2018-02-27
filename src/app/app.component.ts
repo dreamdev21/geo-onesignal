@@ -35,15 +35,16 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      // storage.get("currentUser").then(val => {
-      //   if (val) {
-      //     if (val.role == 0) {
-      //       this.nav.push(ClientlocationPage, { user: val });
-      //     } else {
-      //       this.nav.push(AutocompletelocationPage, { user: val });
-      //     }
-      //   }
-      // });
+      storage.get("CurrentUser").then(val => {
+        if (val) {
+          console.log(val.role);
+          if (val.role == 0) {
+            this.nav.push(ClientlocationPage, { user: val });
+          } else if (val.role == 1) {
+            this.nav.push(AutocompletelocationPage, { user: val });
+          }
+        }
+      });
       this.oneSignal.startInit(
         "9965736a-8118-414e-9084-b79a07d58f8b",
         "169673409052"

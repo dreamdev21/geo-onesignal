@@ -16,6 +16,7 @@ import { Observable } from "rxjs/Observable";
 import { Storage } from "@ionic/storage";
 import { Location } from "../../models/location";
 import { SetlocationPage } from "../setlocation/setlocation";
+import { LoginPage } from "../login/login";
 
 declare var google: any;
 declare var MarkerClusterer: any;
@@ -79,7 +80,10 @@ export class AutocompletelocationPage {
   viewPlace(id) {
     console.log("Clicked Marker", id);
   }
-
+  logout(){
+    this.storage.remove("CurrentUser");
+    this.nav.push(LoginPage);
+  }
   loadMaps() {
     if (!!google) {
       this.initializeMap();

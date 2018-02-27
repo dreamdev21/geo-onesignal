@@ -48,7 +48,6 @@ export class LoginPage {
     console.log("ionViewDidLoad LoginPage");
   }
   Login(user: User) {
-    console.log(user);
     this.checkstate = 0;
     var that = this;
 
@@ -68,6 +67,7 @@ export class LoginPage {
               that.user.password = childSnapshot.val().password;
               that.user.email = childSnapshot.val().email;
               that.user.role = childSnapshot.val().role;
+              that.storage.set("CurrentUser", that.user);
             }
           }
         }
@@ -78,12 +78,13 @@ export class LoginPage {
       } else if (that.checkstate == 1) {
         that.showAlert("Password is incorrect!");
       } else {
+
         if (user.role == 0) {
-          that.storage.set("CurrentUser", that.user);
           that.navCtrl.push(ClientlocationPage);
-        } else if (user.role == 1) {
-          that.storage.set("currentUser", that.user);
+          console.log(that.storage.get("CurrentUser"));
+        } else {
           that.navCtrl.push(AutocompletelocationPage);
+          console.log(that.storage.get("CurrentUser"));
         }
       }
     });

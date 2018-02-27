@@ -8,7 +8,8 @@ import {
 import { Geofence } from "@ionic-native/geofence";
 import { Geolocation } from "@ionic-native/geolocation";
 import { LocationProvider } from "../../providers/location/location";
-
+import { Storage } from "@ionic/storage";
+import { LoginPage } from "../login/login";
 /**
  * Generated class for the ClientlocationPage page.
  *
@@ -29,6 +30,7 @@ export class ClientlocationPage {
     public navParams: NavParams,
     private geofence: Geofence,
     private geolocation: Geolocation,
+    public storage: Storage,
     public LocationProvider: LocationProvider,
     public viewCtrl: ViewController
   ) {}
@@ -36,6 +38,10 @@ export class ClientlocationPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad ClientlocationPage");
     this.mylocation();
+  }
+  logout() {
+    this.storage.remove("CurrentUser");
+    this.navCtrl.push(LoginPage);
   }
   mylocation() {
     this.geolocation
