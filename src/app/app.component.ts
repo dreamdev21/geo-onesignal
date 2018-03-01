@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { OneSignal } from "@ionic-native/onesignal";
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 import { Geofence } from '@ionic-native/geofence';
 import { PushalarmPage } from '../pages/pushalarm/pushalarm';
 import { ClientlocationPage } from "../pages/clientlocation/clientlocation";
@@ -11,6 +12,9 @@ import { AutocompletelocationPage } from "../pages/autocompletelocation/autocomp
 import { Storage } from "@ionic/storage";
 import { IonicPage, Nav, NavParams } from "ionic-angular";
 import { Inject, ViewChild } from "@angular/core";
+import { User } from "../models/user";
+import { AngularFireDatabase } from "angularfire2/database";
+import { FirebaseProvider } from "../providers/firebase/firebase";
 import {
   AlertController
 } from "ionic-angular";
@@ -18,7 +22,7 @@ import {
   templateUrl: "app.html"
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = HomePage;
   @ViewChild(Nav) nav: Nav;
   constructor(
     private oneSignal: OneSignal,
@@ -26,6 +30,7 @@ export class MyApp {
     private geofence: Geofence,
     private alertCtrl: AlertController,
     private storage: Storage,
+    public firebaseProvider: FirebaseProvider,
     statusBar: StatusBar,
     splashScreen: SplashScreen
   ) {
@@ -57,13 +62,15 @@ export class MyApp {
       this.oneSignal.handleNotificationReceived().subscribe(() => {
         // do something when notification is received
         console.log("onesignal notification received");
+        this.firebaseProvider.registerUser(this.storage.get("CurrentUser"));
+        this.nav.push(PushalarmPage);
         // this.showAlert("onesignal notification received");
       });
 
       this.oneSignal.handleNotificationOpened().subscribe(() => {
         // do something when a notification is opened
-        // this.showAlert("onesignal notification opened");
-        this.nav.push(PushalarmPage);
+        this.showAlert("onesignal notification opened");
+        // this.nav.push(PushalarmPage);
       });
 
       this.oneSignal.endInit();

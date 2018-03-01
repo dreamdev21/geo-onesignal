@@ -15,8 +15,10 @@ import { SignupPage } from "../signup/signup";
 import { ClientlocationPage } from "../clientlocation/clientlocation";
 import { SetlocationPage } from "../setlocation/setlocation";
 import { AutocompletelocationPage } from "../autocompletelocation/autocompletelocation";
-import { ModalmapPage} from '../modalmap/modalmap';
+import { ModalmapPage } from "../modalmap/modalmap";
 import { Location } from "../../models/location";
+import { OneSignal } from "@ionic-native/onesignal";
+import { ContentType } from "@angular/http/src/enums";
 /**
  * Generated class for the LoginPage page.
  *
@@ -32,7 +34,7 @@ import { Location } from "../../models/location";
 export class LoginPage {
   public user = {} as User;
   public checkstate = 0;
-  public locations : any;
+  public locations: any;
   public location = {} as Location;
   constructor(
     public navCtrl: NavController,
@@ -41,7 +43,8 @@ export class LoginPage {
     public afd: AngularFireDatabase,
     private alertCtrl: AlertController,
     public firebaseProvider: FirebaseProvider,
-    public storage: Storage
+    public storage: Storage,
+    private OneSignal: OneSignal
   ) {}
 
   ionViewDidLoad() {
@@ -78,7 +81,6 @@ export class LoginPage {
       } else if (that.checkstate == 1) {
         that.showAlert("Password is incorrect!");
       } else {
-
         if (user.role == 0) {
           that.navCtrl.push(ClientlocationPage);
           console.log(that.storage.get("CurrentUser"));
@@ -94,7 +96,25 @@ export class LoginPage {
   }
   goForgotPassword() {
     // this.navCtrl.push(ForgotPasswordPage, {});
-    this.showAlert("Not finished this function.");
+    // this.showAlert("Not finished this function.");
+    // var that = this;
+    // that.locations = [];
+    // var query = firebase
+    //   .database()
+    //   .ref("locations")
+    //   .orderByKey();
+    // query.once("value").then(function(snapshot) {
+    //   snapshot.forEach(function(childSnapshot) {
+    //     var location = { lat: [], lng: [], miles: [], attrUrl: [] };
+    //     location.lat = childSnapshot.val().lat;
+    //     location.lng = childSnapshot.val().lng;
+    //     location.miles = childSnapshot.val().miles;
+    //     location.attrUrl = childSnapshot.val().attrUrl;
+    //     that.locations.push(location);
+    //   });
+    //   that.location = that.locations.pop();
+    // });
+    // that.sendNotificationwithImage(that.location);
   }
   showAlert(text) {
     let alert = this.alertCtrl.create({
@@ -108,4 +128,61 @@ export class LoginPage {
     });
     alert.present();
   }
+  // sendNotificationwithImage(location) {
+  //   console.log(location.val);
+  //   window["plugins"].OneSignal.getIds(function(ids) {
+  //     var notificationObj = {
+  //       contents: { en: "message with image" },
+  //       include_player_ids: [ids.userId],
+  //       big_picture:
+  //         "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg",
+  //       ios_attachments: {
+  //         id1:
+  //           "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg"
+  //       },
+  //       filters: [
+  //         { field: "location", key: "radius", relation: "=", value: "1000" },
+  //         { field: "location", key: "lat", relation: "=", value: "10" },
+  //         { field: "location", key: "long", relation: "=", value: "10" }
+  //       ],
+  //       otherParameters: {
+  //         // Headers: {Content-Type: "application/json"},
+  //         "Autorization": "Basic NWI0ZjlhYTktNDUwZi00NDZjLWE0ZTgtNTc4NmEwY2IzODA0",
+  //         "Content-Type": "application/json"
+  //       }
+  //     };
+
+  //     window["plugins"].OneSignal.postNotification(
+  //       notificationObj,
+  //       function(successResponse) {
+  //         console.log("Notification Post Success:", successResponse);
+  //       },
+  //       function(failedResponse) {
+  //         console.log("Notification Post Failed: ", failedResponse);
+  //         alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
+  //       }
+  //     );
+  //   });
+  // }
+  // getOneSignalPlayerId() {
+  //   window["plugins"].OneSignal.getPermissionSubscriptionState(function(
+  //     status
+  //   ) {
+  //     status.permissionStatus.hasPrompted;
+  //     status.permissionStatus.status;
+
+  //     status.subscriptionStatus.subscribed;
+  //     status.subscriptionStatus.userSubscriptionSetting;
+  //     status.subscriptionStatus.pushToken;
+
+  //     //var playerID = status.subscriptionStatus.userId;
+  //     return status.subscriptionStatus.userId;
+  //   });
+  // }
+
+  // // prompt user to accept sending location data
+  // promptLocation() {
+  //   window["plugins"].OneSignal.promptLocation();
+  //   console.log("location prompted");
+  // }
 }
